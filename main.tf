@@ -10,8 +10,8 @@ terraform {
 # Set project.
 provider "google" {
   project = var.project
-  region  = "europe-west3" # Frankfurt, Germany
-  zone    = "europe-west3-a"
+  region  = var.region
+  zone    = var.zone
 }
 
 # Create a Pub/Sub topic.
