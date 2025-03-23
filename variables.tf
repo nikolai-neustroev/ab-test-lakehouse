@@ -15,3 +15,9 @@ variable "zone" {
   type        = string
   default     = "europe-west3-a"
 }
+
+variable "username" {
+  description = "The username for the VM"
+  type        = string
+  default     = "your_username"
+}

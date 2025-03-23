@@ -1,3 +1,4 @@
-project = "my-unique-project-id"
-region  = "europe-west3"
-zone    = "europe-west3-a"
+project   = "my-unique-project-id"
+region    = "europe-west3"
+zone      = "europe-west3-a"
+username  = "your_username"
