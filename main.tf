@@ -27,43 +27,6 @@ resource "google_pubsub_subscription" "events_subscription" {
   message_retention_duration = "3600s"
 }
 
-# resource "google_compute_instance" "gravitino_instance" {
-#   name         = "gravitino-instance"
-#   machine_type = "e2-standard-4"
-#   zone         = var.zone
-
-#   boot_disk {
-#     initialize_params {
-#       image = "debian-cloud/debian-11" # Using Debian 11; change if needed
-#       size  = 20                       # Boot disk size in GB
-#     }
-#   }
-
-#   network_interface {
-#     network = "default"
-#     access_config {} # This allocates a public IP address
-#   }
-
-#   # Add tags to match the firewall rule for HTTP/HTTPS
-#   tags = ["http-server", "https-server"]
-
-#   metadata_startup_script = templatefile("${path.module}/gravitino_instance_startup.sh", {
-#     username = var.username
-#   })
-# }
-
-# resource "google_compute_firewall" "allow_http_https" {
-#   name    = "allow-http-https"
-#   network = "default"
-
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["80", "443"]
-#   }
-
-#   target_tags = ["http-server", "https-server"]
-# }
-
 resource "google_dataproc_metastore_service" "hive_metastore_61ea" {
   service_id          = "hive-metastore-61ea"
   location            = var.region
@@ -72,22 +35,6 @@ resource "google_dataproc_metastore_service" "hive_metastore_61ea" {
   port                = 9083
   release_channel     = "STABLE"
   deletion_protection = false
-
-  # If you need to configure a maintenance window, add the following block:
-  # maintenance_window {
-  #   day_of_week = "MONDAY"   # Replace with desired day or remove block for "any window"
-  #   hour_of_day = 0
-  # }
-
-  # To use customer-managed encryption keys, uncomment and configure the block below:
-  # encryption_config {
-  #   kms_key = "projects/my-project/locations/global/keyRings/my-keyring/cryptoKeys/my-key"
-  # }
-
-  # Data Catalog integration can be configured via the metadata_integration block if needed:
-  # metadata_integration {
-  #   enabled = false
-  # }
 }
 
 resource "google_dataproc_cluster" "dataproc_cluster" {
@@ -110,7 +57,6 @@ resource "google_dataproc_cluster" "dataproc_cluster" {
     }
 
     metastore_config {
-      # dataproc_metastore_service = google_dataproc_metastore_service.hive_metastore_61ea.id
       dataproc_metastore_service = "projects/${var.project}/locations/${var.region}/services/hive-metastore-61ea"
     }
 
