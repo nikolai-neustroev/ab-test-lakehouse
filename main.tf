@@ -4,11 +4,21 @@ terraform {
       source  = "hashicorp/google"
       version = "6.8.0"
     }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = "6.27.0"
+    }
   }
 }
 
 # Set project.
 provider "google" {
+  project = var.project
+  region  = var.region
+  zone    = var.zone
+}
+
+provider "google-beta" {
   project = var.project
   region  = var.region
   zone    = var.zone
@@ -27,8 +37,8 @@ resource "google_pubsub_subscription" "events_subscription" {
   message_retention_duration = "3600s"
 }
 
-resource "google_dataproc_metastore_service" "hive_metastore_61ea" {
-  service_id          = "hive-metastore-61ea"
+resource "google_dataproc_metastore_service" "hive_metastore_ab25" {
+  service_id          = "hive-metastore-ab25"
   location            = var.region
   tier                = "DEVELOPER"
   network             = "default"
@@ -38,7 +48,7 @@ resource "google_dataproc_metastore_service" "hive_metastore_61ea" {
 }
 
 resource "google_dataproc_cluster" "dataproc_cluster" {
-  name    = "cluster-fd25"
+  name    = "cluster-ab25"
   region  = var.region
   project = var.project
 
@@ -57,7 +67,7 @@ resource "google_dataproc_cluster" "dataproc_cluster" {
     }
 
     metastore_config {
-      dataproc_metastore_service = "projects/${var.project}/locations/${var.region}/services/hive-metastore-61ea"
+      dataproc_metastore_service = "projects/${var.project}/locations/${var.region}/services/hive-metastore-ab25"
     }
 
     master_config {
@@ -115,4 +125,42 @@ resource "google_composer_environment" "cloud_composer" {
       image_version = "composer-3-airflow-2.10.2-build.11"
     }
   }
+}
+
+# Create the GCS bucket for the Dataflow job
+# This bucket will be used to store the output files from the Dataflow job.
+resource "google_storage_bucket" "dataflow_bucket" {
+  name          = "dataflow-bucket-ab25"
+  location      = var.region
+  force_destroy = true
+}
+
+# Create the Dataflow job
+resource "google_dataflow_flex_template_job" "from_pubsub_to_csv_dfjob" {
+  provider                = google-beta
+  name                    = "from-pubsub-to-csv-dfjob"
+  container_spec_gcs_path = "gs://dataflow-templates-europe-west3/latest/flex/Cloud_PubSub_to_GCS_Text_Flex"
+  region                  = "europe-central2"
+
+  parameters = {
+    # inputTopic           = google_pubsub_topic.events_topic.id
+    inputSubscription    = google_pubsub_subscription.events_subscription.id
+    outputDirectory      = "gs://${google_storage_bucket.dataflow_bucket.name}/output/"
+    userTempLocation     = "gs://${google_storage_bucket.dataflow_bucket.name}/temp"
+    outputFilenamePrefix = "review-written-"
+    outputFilenameSuffix = ".csv"
+    outputShardTemplate  = "W-P-SS-of-NN"
+    numShards            = "0"
+    windowDuration       = "5m"
+    yearPattern          = "-YYYY-"
+    monthPattern         = "-MM-"
+    dayPattern           = "-dd-"
+    hourPattern          = "-HH-"
+    minutePattern        = "-mm-"
+    maxNumWorkers       = "2"
+  }
+
+  enable_streaming_engine = true
+  additional_experiments  = ["streaming_mode_at_least_once"]
+  labels                  = {}
 }
