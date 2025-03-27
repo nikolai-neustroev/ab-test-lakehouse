@@ -157,7 +157,7 @@ resource "google_dataflow_flex_template_job" "from_pubsub_to_csv_dfjob" {
     dayPattern           = "-dd-"
     hourPattern          = "-HH-"
     minutePattern        = "-mm-"
-    maxNumWorkers       = "2"
+    maxNumWorkers        = "2"
   }
 
   enable_streaming_engine = true
