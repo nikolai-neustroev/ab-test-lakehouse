@@ -103,8 +103,8 @@ resource "google_storage_bucket" "dataflow_bucket" {
 resource "google_dataflow_flex_template_job" "from_pubsub_to_csv_dfjob" {
   provider                = google-beta
   name                    = "from-pubsub-to-csv-dfjob"
-  container_spec_gcs_path = "gs://dataflow-templates-europe-west3/latest/flex/Cloud_PubSub_to_GCS_Text_Flex"
-  region                  = "europe-central2"
+  container_spec_gcs_path = "gs://dataflow-templates-europe-central2/latest/flex/Cloud_PubSub_to_GCS_Text_Flex"
+  region                  = var.region
 
   parameters = {
     # inputTopic           = google_pubsub_topic.events_topic.id
@@ -112,15 +112,10 @@ resource "google_dataflow_flex_template_job" "from_pubsub_to_csv_dfjob" {
     outputDirectory      = "gs://${google_storage_bucket.dataflow_bucket.name}/output/"
     userTempLocation     = "gs://${google_storage_bucket.dataflow_bucket.name}/temp"
     outputFilenamePrefix = "review-written-"
-    outputFilenameSuffix = ".csv"
-    outputShardTemplate  = "W-P-SS-of-NN"
+    outputFilenameSuffix = ".txt"
+    outputShardTemplate  = "P-SS-of-NN"
     numShards            = "0"
     windowDuration       = "5m"
-    yearPattern          = "-YYYY-"
-    monthPattern         = "-MM-"
-    dayPattern           = "-dd-"
-    hourPattern          = "-HH-"
-    minutePattern        = "-mm-"
     maxNumWorkers        = "2"
   }
 

@@ -96,21 +96,18 @@ def main(base_path):
     project_id = get_gcp_project_id()
     spark = SparkSession.builder \
         .appName("TTest") \
-        .config("spark.jars", ",".join([
-            f"{base_path}/binaries/iceberg-spark-runtime-3.5_2.12-1.8.1.jar",
-            "gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.42.1.jar"
-        ])) \
+        .config("spark.jars", f"{base_path}/binaries/iceberg-spark-runtime-3.5_2.12-1.8.1.jar") \
         .config("spark.sql.catalog.local", "org.apache.iceberg.spark.SparkCatalog") \
         .config("spark.sql.catalog.local.type", "hadoop") \
         .config("spark.sql.catalog.local.warehouse", f"{base_path}/spark-warehouse") \
         .config("spark.sql.catalog.bigquery", "com.google.cloud.spark.bigquery.v2.BigQueryCatalog") \
         .config("spark.sql.catalog.bigquery.project", project_id) \
-        .config("spark.sql.catalog.bigquery.dataset", "your_dataset") \
+        .config("spark.sql.catalog.bigquery.dataset", "dataset") \
         .getOrCreate()
     
     df = spark.table("local.local_db.events")
 
-    df = df.withColumn("event_ts", F.from_unixtime(F.col("event_ts") / 1000))
+    df = df.withColumn("event_ts", F.from_unixtime(F.col("event_ts").cast("bigint") / 1000))
     stats_df = df.groupBy('event_name', 'experiment_uuid', 'experiment_group', 'user_uuid').agg(
         F.countDistinct("event_uuid").alias("event_uuid_count"),
         )\
@@ -190,7 +187,8 @@ def main(base_path):
 
     results_df.write \
         .format("bigquery") \
-        .option("table", "your_project.your_dataset.your_table") \
+        .option("table", f"{project_id}.dataset.ab_table") \
+        .option("temporaryGcsBucket", f"{base_path}/bq_temp") \
         .mode("overwrite") \
         .save()
     

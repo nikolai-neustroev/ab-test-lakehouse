@@ -27,7 +27,7 @@ with DAG(
     default_args=default_args,
     schedule_interval=datetime.timedelta(days=1),
 ) as dag:
-    start_template_job = DataprocInstantiateWorkflowTemplateOperator(
+    DataprocInstantiateWorkflowTemplateOperator(
         task_id="dataproc_workflow_dag",
         template_id="pyspark-funnel-ab-template",
         project_id=project_id,

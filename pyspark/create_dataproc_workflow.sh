@@ -45,25 +45,28 @@ gcloud dataproc workflow-templates add-job pyspark "${SCRIPT_PATH}/json_txt_to_i
   --step-id=json_txt_to_iceberg \
   --workflow-template="$TEMPLATE_NAME" \
   --region="$REGION" \
+  --jars="gs://${DATAPROC_BUCKET}/binaries/iceberg-spark-runtime-3.5_2.12-1.8.1.jar" \
   -- \
-  -base_path="gs://${DATAPROC_BUCKET}" \
-  -json_bucket="gs://${DATAFLOW_BUCKET}"
+  --base_path="gs://${DATAPROC_BUCKET}" \
+  --json_bucket="gs://${DATAFLOW_BUCKET}"
 
 gcloud dataproc workflow-templates add-job pyspark "${SCRIPT_PATH}/csv_to_iceberg.py" \
   --step-id=csv_to_iceberg \
   --start-after=json_txt_to_iceberg \
   --workflow-template="$TEMPLATE_NAME" \
   --region="$REGION" \
+  --jars="gs://${DATAPROC_BUCKET}/binaries/iceberg-spark-runtime-3.5_2.12-1.8.1.jar" \
   -- \
-  -base_path="gs://${DATAPROC_BUCKET}"
+  --base_path="gs://${DATAPROC_BUCKET}"
 
 gcloud dataproc workflow-templates add-job pyspark "${SCRIPT_PATH}/ttest.py" \
   --step-id=ttest \
   --start-after=csv_to_iceberg \
   --workflow-template="$TEMPLATE_NAME" \
   --region="$REGION" \
+  --jars="gs://${DATAPROC_BUCKET}/binaries/iceberg-spark-runtime-3.5_2.12-1.8.1.jar" \
   -- \
-  -base_path="gs://${DATAPROC_BUCKET}"
+  --base_path="gs://${DATAPROC_BUCKET}"
 
 # ==== CONFIRM ====
 gcloud dataproc workflow-templates describe "$TEMPLATE_NAME" \

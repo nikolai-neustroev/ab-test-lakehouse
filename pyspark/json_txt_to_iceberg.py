@@ -1,5 +1,6 @@
 import argparse
 from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
 
 def main(base_path, json_bucket):
     spark = SparkSession.builder \
@@ -12,6 +13,9 @@ def main(base_path, json_bucket):
     
     json_path = f"{json_bucket}/output/*.txt"
     df = spark.read.json(json_path)
+
+    # Convert event_ts from STRING to TIMESTAMP
+    df = df.withColumn("event_ts", F.to_timestamp(F.col("event_ts")))
     
     # Create a database in the "local" catalog if it doesn't already exist.
     spark.sql("CREATE DATABASE IF NOT EXISTS local_db")
@@ -25,12 +29,11 @@ def main(base_path, json_bucket):
             user_uuid        STRING,
             event_ts         TIMESTAMP
         )
-        PARTITIONED BY experiment_uuid
-        CLUSTER BY event_ts
         USING iceberg
+        PARTITIONED BY (experiment_uuid)
     """)
     
-    df.writeTo("local.local_db.events").append()
+    df.writeTo("local.local_db.events").overwritePartitions()
     spark.stop()
 
 if __name__ == "__main__":
