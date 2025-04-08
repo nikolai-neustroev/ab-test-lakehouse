@@ -2,11 +2,12 @@
 """This DAG relies on an Airflow variable
 https://airflow.apache.org/docs/apache-airflow/stable/concepts/variables.html
 * project_id - Google Cloud Project ID to use for the Cloud Dataproc Template.
+* region - Google Cloud Region to use for the Cloud Dataproc Template.
 """
 
 import datetime
 
-from airflow import models
+from airflow import DAG
 from airflow.providers.google.cloud.operators.dataproc import (
     DataprocInstantiateWorkflowTemplateOperator,
 )
@@ -21,7 +22,7 @@ default_args = {
     "project_id": project_id,
 }
 
-with models.DAG(
+with DAG(
     "dataproc_workflow_dag",
     default_args=default_args,
     schedule_interval=datetime.timedelta(days=1),
