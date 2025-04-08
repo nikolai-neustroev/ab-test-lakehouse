@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "6.8.0"
+      version = "6.27.0"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -45,70 +45,14 @@ resource "google_pubsub_subscription" "events_subscription" {
   message_retention_duration = "3600s"
 }
 
-# resource "google_compute_network" "net" {
-#   name                    = "network-ab25"
-#   auto_create_subnetworks = false
-# }
-
 resource "google_dataproc_metastore_service" "hive_metastore_ab25" {
   service_id          = "hive-metastore-ab25"
   location            = var.region
   tier                = "DEVELOPER"
-  # network             = "projects/${var.project}/global/networks/${google_compute_network.net.id}"
   port                = 9083
   deletion_protection = false
 }
 
-resource "google_dataproc_cluster" "dataproc_cluster" {
-  name    = "cluster-ab25"
-  region  = var.region
-  project = var.project
-
-  cluster_config {
-    staging_bucket = null
-
-    endpoint_config {
-      enable_http_port_access = true
-    }
-
-    gce_cluster_config {
-      internal_ip_only = true
-      service_account_scopes = [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ]
-    }
-
-    metastore_config {
-      dataproc_metastore_service = "projects/${var.project}/locations/${var.region}/services/hive-metastore-ab25"
-    }
-
-    master_config {
-      num_instances = 1
-      machine_type  = "n4-standard-2"
-      disk_config {
-        boot_disk_type    = "hyperdisk-balanced"
-        boot_disk_size_gb = 100
-      }
-    }
-
-    worker_config {
-      num_instances = 2
-      machine_type  = "n4-standard-2"
-      disk_config {
-        boot_disk_type    = "hyperdisk-balanced"
-        boot_disk_size_gb = 200
-      }
-    }
-
-    software_config {
-      image_version       = "2.2-debian12"
-      optional_components = ["FLINK"]
-    }
-  }
-  depends_on = [ google_dataproc_metastore_service.hive_metastore_ab25 ]
-}
-
-/*
 # Create the custom service account for Composer
 resource "google_service_account" "composer_sa" {
   account_id   = "composer-sa"
@@ -184,4 +128,3 @@ resource "google_dataflow_flex_template_job" "from_pubsub_to_csv_dfjob" {
   additional_experiments  = ["streaming_mode_at_least_once"]
   labels                  = {}
 }
-*/
