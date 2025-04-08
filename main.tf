@@ -24,6 +24,14 @@ provider "google-beta" {
   zone    = var.zone
 }
 
+# Create the GCS bucket for the csv files and Spark binaries
+# This bucket will be used to store the input files for the Dataproc job.
+resource "google_storage_bucket" "dataproc_bucket" {
+  name          = "dataproc-bucket-ab25"
+  location      = var.region
+  force_destroy = true
+}
+
 # Create a Pub/Sub topic.
 resource "google_pubsub_topic" "events_topic" {
   name                       = "events-topic"
@@ -37,13 +45,17 @@ resource "google_pubsub_subscription" "events_subscription" {
   message_retention_duration = "3600s"
 }
 
+# resource "google_compute_network" "net" {
+#   name                    = "network-ab25"
+#   auto_create_subnetworks = false
+# }
+
 resource "google_dataproc_metastore_service" "hive_metastore_ab25" {
   service_id          = "hive-metastore-ab25"
   location            = var.region
   tier                = "DEVELOPER"
-  network             = "default"
+  # network             = "projects/${var.project}/global/networks/${google_compute_network.net.id}"
   port                = 9083
-  release_channel     = "STABLE"
   deletion_protection = false
 }
 
@@ -93,8 +105,10 @@ resource "google_dataproc_cluster" "dataproc_cluster" {
       optional_components = ["FLINK"]
     }
   }
+  depends_on = [ google_dataproc_metastore_service.hive_metastore_ab25 ]
 }
 
+/*
 # Create the custom service account for Composer
 resource "google_service_account" "composer_sa" {
   account_id   = "composer-sa"
@@ -123,8 +137,14 @@ resource "google_composer_environment" "cloud_composer" {
 
     software_config {
       image_version = "composer-3-airflow-2.10.2-build.11"
+
+      env_variables = {
+        VAR_NAME = "VAR_VALUE"
+      }
     }
   }
+
+  depends_on = [ google_project_iam_member.composer_sa_iam ]
 }
 
 # Create the GCS bucket for the Dataflow job
@@ -164,3 +184,4 @@ resource "google_dataflow_flex_template_job" "from_pubsub_to_csv_dfjob" {
   additional_experiments  = ["streaming_mode_at_least_once"]
   labels                  = {}
 }
+*/
