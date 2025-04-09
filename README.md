@@ -51,6 +51,30 @@ Dataflow and Dataproc used to ingest and process data. BigQuery allows us to exp
 13. After completion return to BigQuery and run `external_table.sql` query. Change the URI if required.
 14. Go to [Looker Studio](https://lookerstudio.google.com/) and use tables from `dataset` as sources.
 
+### Project Structure
+
+The repository is organized as follows:
+
+```
+ab-test-lakehouse/ 
+├── .gitignore                # Git ignore rules for sensitive and transient files 
+├── LICENSE                   # License file (MIT) 
+├── README.md                 # Project documentation 
+├── main.tf                   # Terraform configuration for provisioning GCP resources 
+├── variables.tf              # Terraform variables with default values 
+├── terraform.tfvars.example  # Example file for Terraform variable overrides 
+├── .terraform.lock.hcl       # Terraform lock file for provider versions 
+├── external_table.sql        # SQL script to create an external Iceberg table in BigQuery 
+├── pyspark/                  # PySpark scripts and related files 
+│ ├── ttest.py                # Script to perform statistical tests on A/B test data 
+│ ├── json_txt_to_iceberg.py  # Script to process JSON data into Iceberg tables 
+│ ├── csv_to_iceberg.py       # Script to process CSV data into Iceberg tables 
+│ ├── requirements.txt        # Python dependencies for PySpark scripts 
+│ ├── create_dataproc_workflow.sh  # Script to create a Dataproc workflow template 
+│ ├── dataproc.env.example    # Example environment file for Dataproc configuration 
+│ ├── .gitignore              # Ignore rules specific to the pyspark folder 
+```
+
 ### Next steps
 
 1. Implement orchestration with Airflow or similar tool.
