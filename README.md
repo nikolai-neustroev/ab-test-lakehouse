@@ -16,11 +16,6 @@ Data Engineering Zoomcamp 2025 - Course Project
 8. In dataproc-bucket create `scripts` folder and upload *.py files from `pyspark` local folder.
 9. In ./pyspark copy `dataproc.env.example` file to `dataproc.env` and set your variables.
 10. Run `create_dataproc_workflow.sh`.
-11. Go to [Google Cloud Composer](https://console.cloud.google.com/composer/).
-12. Open cloud-composer environment and in Airflow UI set PROJECT_ID and REGION variables.
-13. Open cloud-composer environment and go to the "DAGS" section.
-14. Press "OPEN DAGS FOLDER".
-15. Upload `dags/dataproc_template_dag.py`.
 
 
 ### Configuring Gravitino 

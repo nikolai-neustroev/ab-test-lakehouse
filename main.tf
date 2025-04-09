@@ -53,44 +53,6 @@ resource "google_dataproc_metastore_service" "hive_metastore_ab25" {
   deletion_protection = false
 }
 
-# Create the custom service account for Composer
-resource "google_service_account" "composer_sa" {
-  account_id   = "composer-sa"
-  display_name = "Custom service account for Cloud Composer"
-}
-
-# Grant the service account the iam.serviceAccountUser role on the project.
-# This role is required so that the Composer environment can act as this service account.
-resource "google_project_iam_member" "composer_sa_iam" {
-  project = var.project
-  role    = "roles/composer.worker"
-  member  = "serviceAccount:${google_service_account.composer_sa.email}"
-}
-
-# Create the Cloud Composer environment, referencing the custom service account.
-resource "google_composer_environment" "cloud_composer" {
-  name   = "cloud-composer"
-  region = var.region
-
-  config {
-    environment_size = "ENVIRONMENT_SIZE_SMALL"
-
-    node_config {
-      service_account = google_service_account.composer_sa.email
-    }
-
-    software_config {
-      image_version = "composer-3-airflow-2.10.2-build.11"
-
-      env_variables = {
-        VAR_NAME = "VAR_VALUE"
-      }
-    }
-  }
-
-  depends_on = [ google_project_iam_member.composer_sa_iam ]
-}
-
 # Create the GCS bucket for the Dataflow job
 # This bucket will be used to store the output files from the Dataflow job.
 resource "google_storage_bucket" "dataflow_bucket" {
