@@ -3,6 +3,10 @@ Data Engineering Zoomcamp 2025 - Course Project
 
 The ab-test-lakehouse project is a data engineering pipeline designed as part of the Data Engineering Zoomcamp 2025 course. It leverages Google Cloud Platform (GCP) services to process and analyze A/B testing data. The pipeline includes infrastructure provisioning with Terraform, data ingestion via Pub/Sub, data processing with Dataproc and PySpark, and data storage in BigQuery for further analysis and visualization.
 
+### Data
+
+I use mock data in this project. The data imitates user funnel events of an online store: homepage visit, product view, placing to cart, making an order, writing a review. [More here](https://github.com/nikolai-neustroev/ab-test-lakehouse-mock-data).
+
 ### Key Components
 
 | **Component** | **Screenshot** |
