@@ -5,7 +5,7 @@ Data Engineering Zoomcamp 2025 - Course Project
 1. gcloud (Google Cloud SDK 509.0.0)
 2. terraform (Terraform v1.11.2)
 
-### Steps
+### Steps to reproduce
 1. Start a new GCP project. 
 2. Copy `terraform.tfvars.example` file and rename it to `terraform.tfvars`. Put your project ID into it instead of "my-unique-project-id".
 3. Run `terraform apply`.
@@ -16,7 +16,10 @@ Data Engineering Zoomcamp 2025 - Course Project
 8. In dataproc-bucket create `scripts` folder and upload *.py files from `pyspark` local folder.
 9. In ./pyspark copy `dataproc.env.example` file to `dataproc.env` and set your variables.
 10. Run `create_dataproc_workflow.sh`.
-
+11. Go to [BigQuery](https://console.cloud.google.com/bigquery) and create a dataset named `dataset`.
+12. Go to [Dataproc](https://console.cloud.google.com/dataproc/workflows/templates) and run the `pyspark-funnel-ab-template`.
+13. After completion return to BigQuery and run `external_table.sql` query. Change the URI if required.
+14. Go to [Looker Studio](https://lookerstudio.google.com/) and use tables from `dataset` as sources.
 
 ### Configuring Gravitino 
 Catalog
