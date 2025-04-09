@@ -1,7 +1,7 @@
 # ab-test-lakehouse
 Data Engineering Zoomcamp 2025 - Course Project
 
-The ab-test-lakehouse project is a data engineering pipeline designed as part of the Data Engineering Zoomcamp 2025 course. It leverages Google Cloud Platform (GCP) services to process and analyze A/B testing data. The pipeline includes infrastructure provisioning with Terraform, data ingestion via Pub/Sub, data processing with Dataproc and PySpark, and data storage in BigQuery for further analysis and visualization.
+The ab-test-lakehouse project is a data engineering project designed as part of the [Data Engineering Zoomcamp 2025](https://github.com/DataTalksClub/data-engineering-zoomcamp) course. It leverages Google Cloud Platform (GCP) services to process and analyze A/B testing data. It includes infrastructure provisioning with Terraform, data ingestion via Pub/Sub, data processing with Dataproc and PySpark, and data storage in Cloud Storage and BigQuery for further analysis and visualization.
 
 ### Data
 
@@ -26,7 +26,7 @@ Dataflow and Dataproc used to ingest and process data. BigQuery allows us to exp
 | **Dataflow** is used to ingest data from Pub/Sub and store in GCP bucket | ![](https://github.com/user-attachments/assets/e2bf1fa0-2644-4ddd-ba15-5e0107edfd29 "Dataflow") |
 | **Apache Iceberg** is used as project's data lake. Data is partioned by experiment_uuid which ensures the uniform storage of the data | ![](https://github.com/user-attachments/assets/36e5109f-b8f6-473b-8327-1212daf91f88 "Iceberg") |
 | **Hive Metastore** is configured for Iceberg table management | ![](https://github.com/user-attachments/assets/b1060461-fa65-44d8-bf6a-2546e2c0fff6 "Metastore") |
-| **PySpark** scripts process data from CSV and JSON files, converting them into Iceberg tables | ![](https://github.com/user-attachments/assets/a2d68ea6-75b8-4d50-ba4c-afd7144fd000 "PySpark") |
+| **PySpark** scripts process data from CSV and JSON files, converting them into Iceberg tables. The final script runs statistical tests over the data to compare conversion rates in two groups | ![](https://github.com/user-attachments/assets/a2d68ea6-75b8-4d50-ba4c-afd7144fd000 "PySpark") |
 | A workflow template orchestrates the execution of PySpark jobs on **Dataproc** | ![](https://github.com/user-attachments/assets/30ae41bd-ae38-43b2-8217-884d8ec7ef34 "Dataproc") |
 | Processed data is stored in **BigQuery** and made accessible via an external Iceberg table and a native table | ![](https://github.com/user-attachments/assets/67cabf23-751a-4ea7-8c08-b1882f1bb214 "BigQuery") |
 | Results are visualized using **Looker Studio** | ![](https://github.com/user-attachments/assets/a77a9d5f-7c73-4f8e-804d-d0addc5d1d2e "Looker Studio") |
