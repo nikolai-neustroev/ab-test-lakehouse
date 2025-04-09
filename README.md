@@ -21,7 +21,7 @@ Dataflow and Dataproc used to ingest and process data. BigQuery allows us to exp
 |---|:---:|
 | **Terraform** is used to provision GCP resources in IaC fashion |  |
 | **Pub/Sub** is used for data streaming | ![](https://private-user-images.githubusercontent.com/38642966/431856604-8495ee27-ebbf-4a1d-bc46-2f557aaad80e.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDQyMDQ1OTcsIm5iZiI6MTc0NDIwNDI5NywicGF0aCI6Ii8zODY0Mjk2Ni80MzE4NTY2MDQtODQ5NWVlMjctZWJiZi00YTFkLWJjNDYtMmY1NTdhYWFkODBlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA0MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNDA5VDEzMTEzN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWViODg3OWVjMmUzMDdkNTRhMWJjMjJlOThiN2I5MjkyOTkxNTU0ZTg0M2ExNDBjYzU1MjVmYTdjZmFkNmE2YzAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.wRKmzfm7Cg27kpZo7oQnUMThGZNj0OAoUZ7xvjpG-E8 "Pub/Sub") |
-| **Dataflow** is used to ingest data from Pub/Sub and store in GCP bucket | f |
+| **Dataflow** is used to ingest data from Pub/Sub and store in GCP bucket | ![](https://github.com/user-attachments/assets/e2bf1fa0-2644-4ddd-ba15-5e0107edfd29 "Dataflow") |
 | **Apache Iceberg** is used as project's data lake. Data is partioned by experiment_uuid which ensures the uniform storage of the data | f |
 | **Hive Metastore** is configured for Iceberg table management | f |
 | **PySpark** scripts process data from CSV and JSON files, converting them into Iceberg tables | f |
