@@ -21,12 +21,12 @@ Dataflow and Dataproc used to ingest and process data. BigQuery allows us to exp
 
 | **Component** | **Screenshot** |
 |---|:---:|
-| **Terraform** is used to provision GCP resources in IaC fashion | ![](https://github.com/user-attachments/assets/e325f5b4-182f-4b48-9ce2-c263a4a3cefb "Terraform") |
+| **Terraform** is used to provision GCP resources in IaC fashion | ![](https://github.com/user-attachments/assets/4114d572-cd79-455e-95ce-a211a6f768d3 "Terraform") |
 | **Pub/Sub** is used for data streaming | ![](https://github.com/user-attachments/assets/8495ee27-ebbf-4a1d-bc46-2f557aaad80e "Pub/Sub") |
 | **Dataflow** is used to ingest streaming data from Pub/Sub in real time and store it in GCP bucket | ![](https://github.com/user-attachments/assets/e2bf1fa0-2644-4ddd-ba15-5e0107edfd29 "Dataflow") |
 | **Apache Iceberg** is used as project's data lake. Data is partioned by experiment_uuid which ensures the uniform storage of the data | ![](https://github.com/user-attachments/assets/36e5109f-b8f6-473b-8327-1212daf91f88 "Iceberg") |
 | **Hive Metastore** is configured for Iceberg table management | ![](https://github.com/user-attachments/assets/b1060461-fa65-44d8-bf6a-2546e2c0fff6 "Metastore") |
-| **PySpark** scripts process data from CSV and JSON files, converting them into Iceberg tables. The final script runs statistical tests over the data to compare conversion rates in two groups | ![](https://github.com/user-attachments/assets/a2d68ea6-75b8-4d50-ba4c-afd7144fd000 "PySpark") |
+| **PySpark** scripts process data from CSV and JSON files, converting them into Iceberg tables. The final script runs statistical tests over the data to compare conversion rates in two groups | ![](https://github.com/user-attachments/assets/64fdaa23-92a5-450f-b2a6-a1b497b607a2 "PySpark") |
 | A workflow template orchestrates the execution of PySpark jobs on **Dataproc** | ![](https://github.com/user-attachments/assets/30ae41bd-ae38-43b2-8217-884d8ec7ef34 "Dataproc") |
 | Processed data is stored in **BigQuery** and made accessible via an external Iceberg table and a native table | ![](https://github.com/user-attachments/assets/67cabf23-751a-4ea7-8c08-b1882f1bb214 "BigQuery") |
 | Results are visualized using **Looker Studio** | ![](https://github.com/user-attachments/assets/a77a9d5f-7c73-4f8e-804d-d0addc5d1d2e "Looker Studio") |
