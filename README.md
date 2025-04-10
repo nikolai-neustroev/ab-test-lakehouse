@@ -77,5 +77,8 @@ ab-test-lakehouse/
 
 ### Next steps
 
-1. Implement orchestration with Airflow or similar tool.
-2. Add data quality tests.
+1. In mock data, add an uplift to group B to register statistically significant difference.
+2. Ensure all data stored as Iceberg tables.
+3. Implement orchestration with Airflow or similar tool.
+4. Add data quality tests.
+5. Replace Hive Metastore with a modern alternative, e.g. Project Nessie or Apache Polaris.
