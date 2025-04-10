@@ -82,3 +82,4 @@ ab-test-lakehouse/
 3. Implement orchestration with Airflow or similar tool.
 4. Add data quality tests.
 5. Replace Hive Metastore with a modern alternative, e.g. Project Nessie or Apache Polaris.
+6. Set up monitoring and alerting on pipelines.
