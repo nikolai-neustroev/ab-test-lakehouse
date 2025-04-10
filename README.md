@@ -39,7 +39,7 @@ Dataflow and Dataproc used to ingest and process data. BigQuery allows us to exp
 1. Start a new GCP project. 
 2. Copy `terraform.tfvars.example` file and rename it to `terraform.tfvars`. Put your project ID into it instead of "my-unique-project-id".
 3. Run `terraform apply`.
-4. While the cloud infrastructure is emerging, generate mock data in ab-test-lakehouse-mock-data repo.
+4. While the cloud infrastructure is emerging, generate mock data in [ab-test-lakehouse-mock-data](https://github.com/nikolai-neustroev/ab-test-lakehouse-mock-data) repo.
 5. After Pub/Sub successfully created, send mock data review_written messages to it.
 6. Upload remaining files to the dataproc_bucket, `csvs` folder.
 7. In dataproc-bucket create `binaries` folder and upload [Iceberg binary](https://search.maven.org/remotecontent?filepath=org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.8.1/iceberg-spark-runtime-3.5_2.12-1.8.1.jar) file.
