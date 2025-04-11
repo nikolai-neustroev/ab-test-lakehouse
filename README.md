@@ -84,5 +84,5 @@ ab-test-lakehouse/
 2. Ensure all data stored as Iceberg tables.
 3. Implement orchestration with Airflow or similar tool.
 4. Add data quality tests.
-5. Replace Hive Metastore with a modern alternative, e.g. Project Nessie, Apache Polaris or Apache Gravitino.
+5. Replace Hive Metastore with a modern alternative, e.g. Project Nessie, Apache Polaris or Apache Gravitino (or serverless solutions like AWS Glue and CloudFlare R2 Data Catalog).
 6. Set up monitoring and alerting on pipelines.
