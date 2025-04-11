@@ -12,7 +12,7 @@ I use mock data in this project. The data imitates user funnel events of an onli
 
 ### Architecture
 
-![Image](https://github.com/user-attachments/assets/2d4054a4-1feb-45af-8515-caae30544580 "Architecture")
+![Image](https://github.com/user-attachments/assets/244e9def-fdd4-4015-aa48-e10fd3f65bb7 "Architecture")
 
 This project implements the data lakehouse architecture - the data is stored in Google Cloud Storage as Apache Iceberg tables. In data lakehouse a transactional storage software layer runs on top of existing data lake and makes it work more like a relational database. A small amount of data is stored in relational data warehouse for the purpose of demonstration, but it is possible to store all data as Iceberg tables.
 
