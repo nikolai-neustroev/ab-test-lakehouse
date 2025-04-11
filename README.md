@@ -1,6 +1,6 @@
 # ab-test-lakehouse
 
-![](https://live.staticflickr.com/7791/18397447682_2b8799d065_k.jpg "Lakehouse")
+![](https://github.com/user-attachments/assets/6f84bc6f-0c79-4db0-a285-96434611775a "Lakehouse")
 
 Data Engineering Zoomcamp 2025 - Course Project
 
