@@ -1,4 +1,7 @@
 # ab-test-lakehouse
+
+![](https://live.staticflickr.com/7791/18397447682_2b8799d065_k.jpg "Lakehouse")
+
 Data Engineering Zoomcamp 2025 - Course Project
 
 The ab-test-lakehouse project is a data engineering project designed as part of the [Data Engineering Zoomcamp 2025](https://github.com/DataTalksClub/data-engineering-zoomcamp) course. It leverages Google Cloud Platform (GCP) services to process and analyze A/B testing data. It includes infrastructure provisioning with Terraform, data ingestion via Pub/Sub, data processing with Dataproc and PySpark, and data storage in Cloud Storage and BigQuery for further analysis and visualization.
@@ -81,5 +84,5 @@ ab-test-lakehouse/
 2. Ensure all data stored as Iceberg tables.
 3. Implement orchestration with Airflow or similar tool.
 4. Add data quality tests.
-5. Replace Hive Metastore with a modern alternative, e.g. Project Nessie or Apache Polaris.
+5. Replace Hive Metastore with a modern alternative, e.g. Project Nessie, Apache Polaris or Apache Gravitino.
 6. Set up monitoring and alerting on pipelines.
